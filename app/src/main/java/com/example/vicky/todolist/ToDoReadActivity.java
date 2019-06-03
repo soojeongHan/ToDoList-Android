@@ -188,7 +188,7 @@ public class ToDoReadActivity extends AppCompatActivity {
 
             // Test DATE 추후 연동 시 사용 예정
             if(todoList.get(0).getDate()==null) {
-                holder.dateTextView.setText("");
+                holder.dateTextView.setText("DATEVALUE : null");
             } else {
                 holder.dateTextView.setText("~"+todoList.get(0).getDate());
             }
@@ -212,6 +212,17 @@ public class ToDoReadActivity extends AppCompatActivity {
                     } else if(list.get(i).isCompleted()==true) {
                         holder.itemName.setPaintFlags(holder.itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     }
+                }
+            });
+
+            holder.itemName.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                    if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                        activity.touchHelper.startDrag(holder);
+                    }
+                    return false;
                 }
             });
 
