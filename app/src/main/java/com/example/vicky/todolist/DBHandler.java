@@ -183,10 +183,10 @@ public class DBHandler extends SQLiteOpenHelper {
     void insertSubToDoModify(long todoId, String name, String date, String content){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COL_NAME,name);
-        cv.put(COL_DATE,date);
-        cv.put(COL_CONTENTS,content);
-        db.update(TABLE_TODO, cv, COL_ID + "=?", new String[]{String.valueOf(todoId)});
+        cv.put(COL_ITEM_NAME,name);
+        cv.put(COL_SUBDATE,date);
+        cv.put(COL_SUBCONTENTS,content);
+        db.update(TABLE_TODO, cv, COL_TODO_ID + "=?", new String[]{String.valueOf(todoId)});
 
     }
 }

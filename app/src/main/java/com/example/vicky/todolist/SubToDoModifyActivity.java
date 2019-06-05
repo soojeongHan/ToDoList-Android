@@ -108,5 +108,3 @@ public class SubToDoModifyActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 }
-
-
