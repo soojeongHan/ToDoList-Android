@@ -134,6 +134,8 @@ public class DashboardActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int i) {
             holder.toDoName.setText(list.get(i).getName());
+            Log.d("getID", String.valueOf(list.get(i).getId()));
+            final long getId = list.get(i).getId();
 
             holder.toDoName.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,6 +151,7 @@ public class DashboardActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     PopupMenu popup = new PopupMenu(activity, holder.menu);
+
                     popup.inflate(R.menu.dashboard_child);
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -165,7 +168,7 @@ public class DashboardActivity extends AppCompatActivity {
                                     dialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            activity.dbHandler.deleteToDo(list.get(i).getId());
+                                            activity.dbHandler.deleteToDo(getId);
                                             activity.refreshList();
                                         }
                                     });

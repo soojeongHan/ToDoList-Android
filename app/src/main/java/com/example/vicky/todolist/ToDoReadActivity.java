@@ -2,6 +2,7 @@ package com.example.vicky.todolist;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -178,24 +179,53 @@ public class ToDoReadActivity extends AppCompatActivity {
             return new ViewHolder(LayoutInflater.from(activity).inflate(R.layout.todoread_sublist, viewGroup, false));
         }
 
+
+
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int i) {
+
             holder.itemName.setText(list.get(i).getItemName());
 
             // Test DATE 추후 연동 시 사용 예정
             if(todoList.get(0).getDate()==null) {
-                holder.dateTextView.setText("");
+                holder.dateTextView.setText("DATEVALUE : null");
             } else {
                 holder.dateTextView.setText("~"+todoList.get(0).getDate());
             }
+
             holder.itemName.setChecked(list.get(i).isCompleted());
+            if(list.get(i).isCompleted()==false) {
+                holder.itemName.setPaintFlags(0);
+            } else if(list.get(i).isCompleted()==true) {
+                holder.itemName.setPaintFlags(holder.itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+
+            // check = false, uncheck = true
             holder.itemName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     list.get(i).setCompleted(!list.get(i).isCompleted());
+                    Log.d("listGetIsCompleted ", String.valueOf(!list.get(i).isCompleted()));
                     activity.dbHandler.updateToDoItem(list.get(i));
+                    if(list.get(i).isCompleted()==false) {
+                        holder.itemName.setPaintFlags(0);
+                    } else if(list.get(i).isCompleted()==true) {
+                        holder.itemName.setPaintFlags(holder.itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
                 }
             });
+
+            holder.itemName.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                    if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                        activity.touchHelper.startDrag(holder);
+                    }
+                    return false;
+                }
+            });
+
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
