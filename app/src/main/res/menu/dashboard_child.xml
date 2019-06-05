@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/menu_edit"
-          android:title="@string/edit"/>
+          android:title="수정"/>
     <item android:id="@+id/menu_delete"
-          android:title="@string/delete"/>
+          android:title="삭제"/>
     <item android:id="@+id/menu_mark_as_completed"
-          android:title="@string/mark_as_completed"/>
+          android:title="마크"/>
     <item android:id="@+id/menu_reset"
-          android:title="@string/reset"/>
+          android:title="리셋 "/>
 
 </menu>

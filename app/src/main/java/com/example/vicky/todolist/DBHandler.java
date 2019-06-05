@@ -180,4 +180,13 @@ public class DBHandler extends SQLiteOpenHelper {
         db.update(TABLE_TODO, cv, COL_ID + "=?", new String[]{String.valueOf(todoId)});
     }
 
+    void insertSubToDoModify(long todoId, String name, String date, String content){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_NAME,name);
+        cv.put(COL_DATE,date);
+        cv.put(COL_CONTENTS,content);
+        db.update(TABLE_TODO, cv, COL_ID + "=?", new String[]{String.valueOf(todoId)});
+
+    }
 }
