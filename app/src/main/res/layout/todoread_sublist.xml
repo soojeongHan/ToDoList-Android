@@ -7,12 +7,12 @@
 
     <CheckBox
             android:id="@+id/cb_item"
-            android:layout_width="match_parent"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:layout_toLeftOf="@+id/tv_date"
             android:layout_toStartOf="@+id/tv_date"
-    />
+            android:layout_marginEnd="183dp" android:layout_marginRight="183dp"/>
 
     <TextView
             android:id="@+id/tv_date"
@@ -23,6 +23,15 @@
             android:layout_toStartOf="@+id/iv_delete"
     />
 
+    <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="176dp"
+            android:layout_height="40dp"
+            android:padding="0dp"
+            android:layout_toLeftOf="@+id/cb_item"
+            android:layout_toStartOf="@+id/tv_date"
+            android:layout_marginRight="-211dp" android:layout_marginEnd="4dp"
+            android:layout_alignBottom="@+id/tv_date" android:layout_marginBottom="3dp"/>
     <ImageView
             android:id="@+id/iv_delete"
             android:layout_width="48dp"

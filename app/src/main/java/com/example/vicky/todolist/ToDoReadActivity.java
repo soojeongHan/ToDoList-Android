@@ -67,6 +67,7 @@ public class ToDoReadActivity extends AppCompatActivity {
         todoList = dbHandler.getToDoRead(todoId);
         Log.i("todoList", String.valueOf(todoList));
         Log.i("todoList.SIZE", String.valueOf(todoList.size()));
+
         if(todoList.get(0).getName()==null) {
             headerView.setText("");
         } else {
@@ -183,7 +184,8 @@ public class ToDoReadActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int i) {
-
+            Log.i("subToDoId : ", String.valueOf(list.get(i).getToDoId()));
+            todoId = list.get(i).getToDoId();
             holder.itemName.setText(list.get(i).getItemName());
 
             // Test DATE 추후 연동 시 사용 예정
@@ -192,12 +194,17 @@ public class ToDoReadActivity extends AppCompatActivity {
             } else {
                 holder.dateTextView.setText("~"+todoList.get(0).getDate());
             }
+            if(list.get(0).getItemName()==null) {
+                holder.headerTextView.setText(" ");
+            } else {
+                holder.headerTextView.setText(list.get(0).getItemName());
+            }
 
             holder.itemName.setChecked(list.get(i).isCompleted());
             if(list.get(i).isCompleted()==false) {
                 holder.itemName.setPaintFlags(0);
             } else if(list.get(i).isCompleted()==true) {
-                holder.itemName.setPaintFlags(holder.itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.itemName.setPaintFlags(holder.headerTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
 
             // check = false, uncheck = true
@@ -210,7 +217,7 @@ public class ToDoReadActivity extends AppCompatActivity {
                     if(list.get(i).isCompleted()==false) {
                         holder.itemName.setPaintFlags(0);
                     } else if(list.get(i).isCompleted()==true) {
-                        holder.itemName.setPaintFlags(holder.itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        holder.itemName.setPaintFlags(holder.headerTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     }
                 }
             });
@@ -223,6 +230,15 @@ public class ToDoReadActivity extends AppCompatActivity {
                         activity.touchHelper.startDrag(holder);
                     }
                     return false;
+                }
+            });
+
+            holder.headerTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ToDoReadActivity.this, SubToDoReadActivity.class);
+                    intent.putExtra(COL_TODO_ID, todoId);
+                    startActivity(intent);
                 }
             });
 
@@ -269,13 +285,16 @@ public class ToDoReadActivity extends AppCompatActivity {
 
         class ViewHolder extends RecyclerView.ViewHolder {
             CheckBox itemName;
+            TextView headerTextView;
             TextView dateTextView;
             ImageView delete;
             ImageView move;
 
+
             ViewHolder(View v) {
                 super(v);
                 itemName = v.findViewById(R.id.cb_item);
+                headerTextView = v.findViewById(R.id.tv_header);
                 dateTextView = v.findViewById(R.id.tv_date);
                 delete = v.findViewById(R.id.iv_delete);
                 move = v.findViewById(R.id.iv_move);

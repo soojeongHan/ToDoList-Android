@@ -138,6 +138,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 item.setId(queryResult.getLong(queryResult.getColumnIndex(COL_ID)));
                 item.setToDoId(queryResult.getLong(queryResult.getColumnIndex(COL_TODO_ID)));
                 item.setItemName(queryResult.getString(queryResult.getColumnIndex(COL_ITEM_NAME)));
+                item.setSubContents(queryResult.getString(queryResult.getColumnIndex(COL_SUBCONTENTS)));
+                item.setSubDate(queryResult.getString(queryResult.getColumnIndex(COL_SUBDATE)));
                 item.setCompleted(queryResult.getInt(queryResult.getColumnIndex(COL_IS_COMPLETED)) == 1);
                 result.add(item);
             } while (queryResult.moveToNext());
@@ -180,13 +182,4 @@ public class DBHandler extends SQLiteOpenHelper {
         db.update(TABLE_TODO, cv, COL_ID + "=?", new String[]{String.valueOf(todoId)});
     }
 
-    void insertSubToDoModify(long todoId, String name, String date, String content){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(COL_NAME,name);
-        cv.put(COL_DATE,date);
-        cv.put(COL_CONTENTS,content);
-        db.update(TABLE_TODO, cv, COL_ID + "=?", new String[]{String.valueOf(todoId)});
-
-    }
 }
