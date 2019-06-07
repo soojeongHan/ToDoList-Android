@@ -30,8 +30,7 @@
         <activity android:name=".SubToDoModifyActivity"
                   android:parentActivityName=".SubToDoReadActivity">
         </activity>
-        <activity android:name=".SubToDoAddActivity">
-        </activity>
+        <activity android:name=".SubToDoReadActivity"></activity>
 
     </application>
 

@@ -12,6 +12,7 @@ import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.vicky.todolist.DTO.ToDo;
+import com.example.vicky.todolist.DTO.ToDoItem;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class SubToDoModifyActivity extends AppCompatActivity{
     SubToDoModifyActivity activity;
     DBHandler dbHandler;
     ItemTouchHelper touchHelper;
-    ArrayList<ToDo> todoList;
+    ArrayList<ToDoItem> todoList;
     private int REQUEST = 1;
 
     @Override
@@ -42,27 +43,27 @@ public class SubToDoModifyActivity extends AppCompatActivity{
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("");
 
-        todoId = getIntent().getLongExtra(INTENT_TODO_ID, -1);
+        todoId = getIntent().getLongExtra(INTENT_TODO_ID ,-1);
         Log.i("TODOMODIFY_ID", String.valueOf(todoId));
         activity = this;
         dbHandler = new DBHandler(activity);
-        todoList = dbHandler.getToDoRead(todoId);
+        todoList = dbHandler.getToDoItems(todoId);
         Log.i("todoList", String.valueOf(todoList));
         Log.i("todoList.SIZE", String.valueOf(todoList.size()));
-        if(todoList.get(0).getName()==null) {
+        if(todoList.get(0).getItemName()==null) {
             headerView_edit.setText("");
         } else {
-            headerView_edit.setText(todoList.get(0).getName());
+            headerView_edit.setText(todoList.get(0).getItemName());
         }
-        if(todoList.get(0).getContents()==null) {
+        if(todoList.get(0).getSubContents()==null) {
             contentView_edit.setText("");
         } else {
-            contentView_edit.setText(todoList.get(0).getContents());
+            contentView_edit.setText(todoList.get(0).getSubContents());
         }
-        if(todoList.get(0).getDate()==null) {
+        if(todoList.get(0).getSubDate()==null) {
             dateView_edit.setText("");
         } else {
-            dateView_edit.setText(todoList.get(0).getDate());
+            dateView_edit.setText(todoList.get(0).getSubDate());
         }
 
         dateView_edit.setOnClickListener(new View.OnClickListener() {
@@ -90,23 +91,21 @@ public class SubToDoModifyActivity extends AppCompatActivity{
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        SubToDoReadActivity ta = SubToDoReadActivity.finish_SubtoDoReadActivity;
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.menu_check:
-                dbHandler.insertSubToDoModify(todoId, headerView_edit.getText().toString(), dateView_edit.getText().toString(), contentView_edit.getText().toString());
-                finish();
-                ta.finish();
-                Intent intent = new Intent(SubToDoModifyActivity.this, SubToDoReadActivity.class);
-                intent.putExtra(INTENT_TODO_ID, todoId);
-                startActivity(intent);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        public boolean onOptionsItemSelected(MenuItem item) {
+            SubToDoReadActivity ta = SubToDoReadActivity.finish_SubToDoReadActivity;
+            switch (item.getItemId()){
+                case android.R.id.home:
+                    onBackPressed();
+                    return true;
+                case R.id.menu_check:
+                    dbHandler.insertSubToDoModify(todoId, headerView_edit.getText().toString(), dateView_edit.getText().toString(), contentView_edit.getText().toString());
+                    finish();
+                    ta.finish();
+                    Intent intent = new Intent(SubToDoModifyActivity.this, SubToDoReadActivity.class);
+                    intent.putExtra(INTENT_TODO_ID, todoId);
+                    startActivity(intent);
+                    return true;
+            }
+            return super.onOptionsItemSelected(item);
     }
 }
-
-

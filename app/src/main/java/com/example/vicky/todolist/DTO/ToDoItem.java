@@ -41,9 +41,7 @@ public class ToDoItem {
         this.subDate = subDate;
     }
 
-    public final String getItemName() {
-        return this.itemName;
-    }
+    public final String getItemName() {return this.itemName;}
 
     public final void setItemName( String itemName) {
         this.itemName = itemName;
