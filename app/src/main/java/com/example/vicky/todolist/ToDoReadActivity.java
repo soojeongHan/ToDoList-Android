@@ -242,6 +242,15 @@ public class ToDoReadActivity extends AppCompatActivity {
                 }
             });
 
+            holder.dateTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ToDoReadActivity.this, SubToDoReadActivity.class);
+                    intent.putExtra(COL_TODO_ID, todoId);
+                    startActivity(intent);
+                }
+            });
+
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

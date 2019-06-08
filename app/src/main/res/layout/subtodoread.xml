@@ -11,29 +11,43 @@
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="@color/colorPrimaryDark" android:layout_alignParentTop="true"/>
+            android:background="@color/colorPrimaryDark"
+            android:layout_alignParentTop="true"/>
 
     <TextView
             android:background="@drawable/edge"
-            android:layout_width="wrap_content"
-            android:layout_height="421dp" android:id="@+id/subContentsView"
-            android:layout_marginTop="9dp" android:layout_below="@+id/subDateView"
-            android:layout_alignParentEnd="true" android:layout_alignParentRight="true" android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp" android:layout_alignParentStart="true" android:layout_marginLeft="5dp"
-            android:layout_marginStart="2dp" android:layout_alignParentLeft="true"
+            android:layout_width="402dp"
+            android:layout_height="390dp"
+            android:id="@+id/subContentsView"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/subDateView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_alignParentLeft="true"
             android:textSize="27sp"
             android:padding="5dp"/>
     <TextView
             android:background="@drawable/edge"
             android:layout_width="400dp"
-            android:layout_height="40dp" android:id="@+id/subDateView"
-            android:layout_alignParentStart="true" android:layout_marginTop="127dp"
-            android:layout_marginStart="3dp" android:layout_marginLeft="3dp"
-            android:layout_alignParentLeft="true" android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" android:layout_marginRight="5dp" android:layout_marginEnd="5dp"
+            android:layout_height="40dp"
+            android:id="@+id/subDateView"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="127dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:gravity="center_horizontal"
-            android:hint="서브"
-            android:textSize="27sp" android:layout_alignTop="@+id/item_toolbar"/>
+            android:textSize="27sp"
+            android:layout_alignTop="@+id/item_toolbar"/>
 
     <TextView
             android:background="@drawable/edge"
@@ -41,10 +55,16 @@
             android:layout_height="60dp"
             android:id="@+id/subHeaderView"
             android:layout_marginTop="-68dp"
-            android:layout_alignParentStart="true" android:layout_marginStart="3dp" android:layout_marginLeft="3dp"
-            android:layout_alignParentLeft="true" android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" android:layout_marginRight="5dp" android:layout_marginEnd="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:gravity="center_horizontal"
-            android:textSize="42sp" android:layout_alignTop="@+id/subDateView"/>
+            android:textSize="42sp"
+            android:layout_alignTop="@+id/subDateView"/>
 
 </RelativeLayout>
