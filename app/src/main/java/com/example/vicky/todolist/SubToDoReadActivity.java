@@ -88,7 +88,10 @@ public class SubToDoReadActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                onBackPressed();
+                Intent todogo = new Intent(SubToDoReadActivity.this, ToDoReadActivity.class);
+                todogo.putExtra(INTENT_TODO_ID, todoId);
+                startActivity(todogo);
+                finish();
                 return true;
             case R.id.menu_edit:
                 Intent editIntent = new Intent(SubToDoReadActivity.this, SubToDoModifyActivity.class);

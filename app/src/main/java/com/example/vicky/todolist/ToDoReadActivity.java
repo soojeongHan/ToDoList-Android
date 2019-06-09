@@ -88,32 +88,16 @@ public class ToDoReadActivity extends AppCompatActivity {
         fab_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-                dialog.setTitle("Add ToDo Item");
-                View view = getLayoutInflater().inflate(R.layout.dialog_dashboard, null);
-                final EditText toDoName = view.findViewById(R.id.ev_todo);
-                dialog.setView(view);
-                dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (toDoName.getText().toString().length() > 0) {
-                            ToDoItem item = new ToDoItem();
-                            item.setItemName(toDoName.getText().toString());
-                            item.setToDoId(todoId);
-                            item.setCompleted(false);
-                            dbHandler.addToDoItem(item);
-                            refreshList();
-                        }
-                    }
-                });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                dialog.show();
-            }
+                /*ToDoItem item = new ToDoItem();
+                item.setToDoId(todoId);
+                item.setCompleted(false);
+                dbHandler.addToDoItem(item);
+                list.add(item);
+                Intent editIntent = new Intent(ToDoReadActivity.this, SubToDoAddActivity.class);
+                editIntent.putExtra(INTENT_TODO_ID, todoId);
+                startActivity(editIntent);
+                finish();*/
+                }
         });
         touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
@@ -239,6 +223,7 @@ public class ToDoReadActivity extends AppCompatActivity {
                     Intent intent = new Intent(ToDoReadActivity.this, SubToDoReadActivity.class);
                     intent.putExtra(COL_TODO_ID, todoId);
                     startActivity(intent);
+                    finish();
                 }
             });
 

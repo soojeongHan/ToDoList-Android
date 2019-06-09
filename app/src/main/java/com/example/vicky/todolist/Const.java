@@ -18,4 +18,6 @@ public class Const {
     public static final String COL_IS_COMPLETED = "isCompleted";
     public static final String INTENT_TODO_ID = "TodoId";
     public static final String INTENT_TODO_NAME = "TodoName";
+    public static final String TABLE_SubTODO = "SubToDo";
+    public static final String COL_SubTODO_ID = "SubtoDoId";
 }

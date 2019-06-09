@@ -7,11 +7,9 @@
 
     <CheckBox
             android:id="@+id/cb_item"
-            android:layout_width="match_parent"
+            android:layout_width="267dp"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:layout_toLeftOf="@+id/iv_edit"
-            android:layout_toStartOf="@+id/iv_edit"
     />
 
     <ImageView

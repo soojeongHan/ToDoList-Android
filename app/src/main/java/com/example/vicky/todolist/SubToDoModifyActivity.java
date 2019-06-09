@@ -98,10 +98,10 @@ public class SubToDoModifyActivity extends AppCompatActivity{
                     onBackPressed();
                     return true;
                 case R.id.menu_check:
-                    dbHandler.insertSubToDoModify(todoId, headerView_edit.getText().toString(), dateView_edit.getText().toString(), contentView_edit.getText().toString());
+                    dbHandler.updateSubToDoModify(todoId, headerView_edit.getText().toString(), dateView_edit.getText().toString(), contentView_edit.getText().toString());
                     finish();
                     ta.finish();
-                    Intent intent = new Intent(SubToDoModifyActivity.this, SubToDoReadActivity.class);
+                    Intent intent = new Intent(SubToDoModifyActivity.this, ToDoReadActivity.class);
                     intent.putExtra(INTENT_TODO_ID, todoId);
                     startActivity(intent);
                     return true;
