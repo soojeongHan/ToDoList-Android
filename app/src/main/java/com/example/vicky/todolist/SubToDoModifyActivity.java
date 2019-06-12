@@ -21,12 +21,11 @@ import static com.example.vicky.todolist.Const.*;
 public class SubToDoModifyActivity extends AppCompatActivity{
 
     Toolbar item_toolbar;
-    static TextView headerView_edit,dateView_edit,contentView_edit;
+    TextView headerView_edit,dateView_edit,contentView_edit;
 
     long todoId = -1;
     SubToDoModifyActivity activity;
     DBHandler dbHandler;
-    ItemTouchHelper touchHelper;
     ArrayList<ToDoItem> todoList;
     private int REQUEST = 1;
 

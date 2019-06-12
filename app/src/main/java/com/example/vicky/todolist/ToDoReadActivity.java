@@ -88,15 +88,10 @@ public class ToDoReadActivity extends AppCompatActivity {
         fab_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*ToDoItem item = new ToDoItem();
-                item.setToDoId(todoId);
-                item.setCompleted(false);
-                dbHandler.addToDoItem(item);
-                list.add(item);
                 Intent editIntent = new Intent(ToDoReadActivity.this, SubToDoAddActivity.class);
                 editIntent.putExtra(INTENT_TODO_ID, todoId);
                 startActivity(editIntent);
-                finish();*/
+                finish();
                 }
         });
         touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
@@ -169,6 +164,7 @@ public class ToDoReadActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int i) {
             Log.i("subToDoId : ", String.valueOf(list.get(i).getToDoId()));
+
             todoId = list.get(i).getToDoId();
             holder.itemName.setText(list.get(i).getItemName());
 

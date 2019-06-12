@@ -19,8 +19,8 @@ import static com.example.vicky.todolist.Const.*;
 public class ToDoModifyActivity extends AppCompatActivity {
 
     Toolbar item_toolbar;
-    static TextView headerView_edit,dateView_edit,contentView_edit;
-
+    static TextView dateView_edit;
+    static EditText headerView_edit,contentView_edit;
     long todoId = -1;
     ToDoModifyActivity activity;
     DBHandler dbHandler;

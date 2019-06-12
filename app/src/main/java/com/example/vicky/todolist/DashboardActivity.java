@@ -61,6 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (toDoName.getText().toString().length() > 0) {
+                            Log.i("todoname length", String.valueOf(toDoName.getText().toString().length()));
                             ToDo toDo = new ToDo();
                             toDo.setName(toDoName.getText().toString());
                             dbHandler.addToDo(toDo);

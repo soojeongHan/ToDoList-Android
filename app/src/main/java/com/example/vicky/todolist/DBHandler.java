@@ -52,6 +52,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL_NAME, todo.getName());
+        Log.i("cv : ", String.valueOf(cv));
         long result = db.insert(TABLE_TODO, null, cv);
         return result != -1;
     }
@@ -175,6 +176,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COL_CONTENTS,content);
         db.update(TABLE_TODO, cv, COL_ID + "=?", new String[]{String.valueOf(todoId)});
     }
+
     void updateCalendar(long todoId, String date) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -190,5 +192,16 @@ public class DBHandler extends SQLiteOpenHelper {
         cv.put(COL_SUBDATE,date);
         cv.put(COL_SUBCONTENTS,content);
         db.update(TABLE_TODO_ITEM, cv, COL_TODO_ID + "=?", new String[]{String.valueOf(todoId)});
+    }
+
+    void SubToDoAdd(long todoId, String name, String date, String content) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_ITEM_NAME, name);
+        cv.put(COL_SUBCONTENTS, content);
+        cv.put(COL_SUBDATE, date);
+        cv.put(COL_TODO_ID, todoId);
+        Log.i("cv : ", String.valueOf(cv));
+        db.insert(TABLE_TODO_ITEM, null, cv);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.vicky.todolist;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,27 +10,20 @@ import android.util.Log;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.ImageView;
 import com.example.vicky.todolist.DTO.ToDo;
-import com.example.vicky.todolist.DTO.ToDoItem;
 
 import java.util.ArrayList;
 
 import static com.example.vicky.todolist.Const.*;
 
-
-
 public class SubToDoAddActivity extends AppCompatActivity {
 
-
     Toolbar item_toolbar;
-    static TextView headerView_edit,dateView_edit,contentView_edit;
-
+    static TextView dateView_edit_add;
+    static EditText headerView_edit_add,contentView_edit_add;
     long todoId = -1;
-    SubToDoModifyActivity activity;
+    SubToDoAddActivity activity;
     DBHandler dbHandler;
-    ItemTouchHelper touchHelper;
-    ArrayList<ToDoItem> todoList;
     private int REQUEST = 1;
 
     @Override
@@ -39,37 +31,25 @@ public class SubToDoAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todomodify);
         item_toolbar = findViewById(R.id.item_toolbar);
-        headerView_edit = findViewById(R.id.headerView_edit);
-        dateView_edit = findViewById(R.id.dateView_edit);
-        contentView_edit = findViewById(R.id.contentView_edit);
+        headerView_edit_add = findViewById(R.id.headerView_edit);
+        dateView_edit_add = findViewById(R.id.dateView_edit);
+        contentView_edit_add = findViewById(R.id.contentView_edit);
         setSupportActionBar(item_toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("");
-        todoId = getIntent().getLongExtra(INTENT_TODO_ID ,-1);
+
+        todoId = getIntent().getLongExtra(INTENT_TODO_ID, -1);
         Log.i("TODOMODIFY_ID", String.valueOf(todoId));
-
+        activity = this;
         dbHandler = new DBHandler(activity);
-        todoList = dbHandler.getToDoItems(todoId);
-        Log.i("todoList", String.valueOf(todoList));
-        Log.i("todoList.SIZE", String.valueOf(todoList.size()));
-        if(todoList.get(0).getItemName()==null) {
-            headerView_edit.setText("");
-        } else {
-            headerView_edit.setText(todoList.get(0).getItemName());
-        }
-        if(todoList.get(0).getSubContents()==null) {
-            contentView_edit.setText("");
-        } else {
-            contentView_edit.setText(todoList.get(0).getSubContents());
-        }
-        if(todoList.get(0).getSubDate()==null) {
-            dateView_edit.setText("");
-        } else {
-            dateView_edit.setText(todoList.get(0).getSubDate());
-        }
 
-        dateView_edit.setOnClickListener(new View.OnClickListener() {
+        headerView_edit_add.setText("");
+
+        contentView_edit_add.setText("");
+        dateView_edit_add.setText("");
+
+        dateView_edit_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SubToDoAddActivity.this, CalendarActivity.class);
@@ -83,7 +63,7 @@ public class SubToDoAddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
-            dateView_edit.setText(data.getStringExtra("date"));
+            dateView_edit_add.setText(data.getStringExtra("date"));
         }
     }
 
@@ -95,13 +75,17 @@ public class SubToDoAddActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        SubToDoReadActivity ta = SubToDoReadActivity.finish_SubToDoReadActivity;
+        ToDoReadActivity ta = ToDoReadActivity.finish_toDoReadActivity;
         switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
                 return true;
             case R.id.menu_check:
-                dbHandler.updateSubToDoModify(todoId, headerView_edit.getText().toString(), dateView_edit.getText().toString(), contentView_edit.getText().toString());
+                Log.i("subId", String.valueOf(todoId));
+                Log.i("subHeader", String.valueOf(headerView_edit_add.getText()));
+                Log.i("subDate", String.valueOf(dateView_edit_add.getText()));
+                Log.i("subContent", String.valueOf(contentView_edit_add.getText()));
+                dbHandler.SubToDoAdd(todoId, headerView_edit_add.getText().toString(), dateView_edit_add.getText().toString(), contentView_edit_add.getText().toString());
                 finish();
                 ta.finish();
                 Intent intent = new Intent(SubToDoAddActivity.this, ToDoReadActivity.class);
@@ -111,5 +95,5 @@ public class SubToDoAddActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
+
