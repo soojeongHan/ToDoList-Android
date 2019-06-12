@@ -16,7 +16,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.*;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.vicky.todolist.DTO.ToDo;
@@ -159,8 +158,6 @@ public class ToDoReadActivity extends AppCompatActivity {
             return new ViewHolder(LayoutInflater.from(activity).inflate(R.layout.todoread_sublist, viewGroup, false));
         }
 
-
-
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int i) {
             Log.i("subToDoId : ", String.valueOf(list.get(i).getToDoId()));
@@ -168,23 +165,22 @@ public class ToDoReadActivity extends AppCompatActivity {
             todoId = list.get(i).getToDoId();
             holder.itemName.setText(list.get(i).getItemName());
 
-            // Test DATE 추후 연동 시 사용 예정
-            if(todoList.get(0).getDate()==null) {
-                holder.dateTextView.setText("DATEVALUE : null");
+            if(list.get(i).getSubDate()==null) {
+                holder.dateTextView.setText("날짜를 입력하세요");
             } else {
-                holder.dateTextView.setText("~"+todoList.get(0).getDate());
+                holder.dateTextView.setText("~"+list.get(i).getSubDate());
             }
-            if(list.get(0).getItemName()==null) {
+            if(list.get(i).getItemName()==null) {
                 holder.headerTextView.setText(" ");
             } else {
-                holder.headerTextView.setText(list.get(0).getItemName());
+                holder.headerTextView.setText(list.get(i).getItemName());
             }
 
             holder.itemName.setChecked(list.get(i).isCompleted());
             if(list.get(i).isCompleted()==false) {
-                holder.itemName.setPaintFlags(0);
+                holder.headerTextView.setPaintFlags(0);
             } else if(list.get(i).isCompleted()==true) {
-                holder.itemName.setPaintFlags(holder.headerTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.headerTextView.setPaintFlags(holder.headerTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
 
             // check = false, uncheck = true
@@ -195,9 +191,9 @@ public class ToDoReadActivity extends AppCompatActivity {
                     Log.d("listGetIsCompleted ", String.valueOf(!list.get(i).isCompleted()));
                     activity.dbHandler.updateToDoItem(list.get(i));
                     if(list.get(i).isCompleted()==false) {
-                        holder.itemName.setPaintFlags(0);
+                        holder.headerTextView.setPaintFlags(0);
                     } else if(list.get(i).isCompleted()==true) {
-                        holder.itemName.setPaintFlags(holder.headerTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        holder.headerTextView.setPaintFlags(holder.headerTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     }
                 }
             });
@@ -229,6 +225,7 @@ public class ToDoReadActivity extends AppCompatActivity {
                     Intent intent = new Intent(ToDoReadActivity.this, SubToDoReadActivity.class);
                     intent.putExtra(COL_TODO_ID, todoId);
                     startActivity(intent);
+                    finish();
                 }
             });
 
@@ -236,16 +233,16 @@ public class ToDoReadActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-                    dialog.setTitle("Are you sure");
-                    dialog.setMessage("Do you want to delete this item ?");
-                    dialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                    dialog.setTitle("삭제");
+                    dialog.setMessage("삭제하십니까?");
+                    dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int pos) {
                             activity.dbHandler.deleteToDoItem(list.get(i).getId());
                             activity.refreshList();
                         }
                     });
-                    dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    dialog.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 

@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.example.vicky.todolist.DTO.ToDo;
-
-import java.util.ArrayList;
 
 import static com.example.vicky.todolist.Const.*;
 
