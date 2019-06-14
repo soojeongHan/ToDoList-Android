@@ -90,7 +90,7 @@ public class ToDoReadActivity extends AppCompatActivity {
                 Intent editIntent = new Intent(ToDoReadActivity.this, SubToDoAddActivity.class);
                 editIntent.putExtra(INTENT_TODO_ID, todoId);
                 startActivity(editIntent);
-                finish();
+
                 }
         });
         touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {

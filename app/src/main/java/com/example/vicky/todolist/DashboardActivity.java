@@ -13,10 +13,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +30,8 @@ public class DashboardActivity extends AppCompatActivity {
     Toolbar dashboard_toolbar;
     RecyclerView rv_dashboard;
     FloatingActionButton fab_dashboard;
+    //진행 = 1, 완료 = 0;
+    static int ProcessTodo = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class DashboardActivity extends AppCompatActivity {
         rv_dashboard = findViewById(R.id.rv_dashboard);
         fab_dashboard = findViewById(R.id.fab_dashboard);
         setSupportActionBar(dashboard_toolbar);
-        setTitle("Dashboard");
+        setTitle("할 일");
         activity = this;
         dbHandler = new DBHandler(activity);
         rv_dashboard.setLayoutManager(new LinearLayoutManager(activity));
@@ -86,34 +85,33 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void updateToDo(final ToDo toDo) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-        dialog.setTitle("Update ToDo");
-        View view = getLayoutInflater().inflate(R.layout.dialog_dashboard, null);
-        final EditText toDoName = view.findViewById(R.id.ev_todo);
-        toDoName.setText(toDo.getName());
-        dialog.setView(view);
-        dialog.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (toDoName.getText().toString().length() > 0) {
-                    toDo.setName(toDoName.getText().toString());
-                    dbHandler.updateToDo(toDo);
-                    refreshList();
-                }
-            }
-        });
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dashboard_menu, menu);
+        return true;
+    }
 
-            }
-        });
-        dialog.show();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_ToDo:
+                ProcessTodo = 1;
+                Log.i("ProcessTodo", String.valueOf(ProcessTodo));
+                setTitle("할 일");
+                refreshList();
+                return true;
+            case R.id.menu_CompleteToDo:
+                ProcessTodo = 0;
+                Log.i("ProcessTodo", String.valueOf(ProcessTodo));
+                setTitle("완 료");
+                refreshList();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void refreshList() {
-        rv_dashboard.setAdapter(new DashboardAdapter(activity, dbHandler.getToDos()));
+        rv_dashboard.setAdapter(new DashboardAdapter(activity, dbHandler.getToDoFromCompleted(ProcessTodo)));
     }
 
     class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder> {
@@ -158,22 +156,35 @@ public class DashboardActivity extends AppCompatActivity {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             switch (menuItem.getItemId()) {
-                                case R.id.menu_edit: {
-                                    activity.updateToDo(list.get(i));
+                                case R.id.menu_mark_as_completed: {
+                                    Log.i("TODO GET ID", String.valueOf(list.get(i).getId()));
+                                    Log.i("TODO GET COMPLETED ", String.valueOf(list.get(i).getTodo_isCompleted()));
+
+                                    if(list.get(i).getTodo_isCompleted()==true) {
+                                        activity.dbHandler.updateToDoCompleted(list.get(i).getId(), 0);
+                                        list.get(i).setTodo_isCompleted(false);
+                                    } else if(list.get(i).getTodo_isCompleted()==false){
+                                        activity.dbHandler.updateToDoCompleted(list.get(i).getId(), 1);
+                                        list.get(i).setTodo_isCompleted(true);
+                                    }
+                                    refreshList();
+
+                                    Log.i("TODO GET ID", String.valueOf(list.get(i).getId()));
+                                    Log.i("TODO GET COMPLETED ", String.valueOf(list.get(i).getTodo_isCompleted()));
                                     break;
                                 }
                                 case R.id.menu_delete: {
                                     AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-                                    dialog.setTitle("Are you sure");
-                                    dialog.setMessage("Do you want to delete this task ?");
-                                    dialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                                    dialog.setTitle("");
+                                    dialog.setMessage("삭제하시겠습니까?");
+                                    dialog.setPositiveButton("네", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             activity.dbHandler.deleteToDo(getId);
                                             activity.refreshList();
                                         }
                                     });
-                                    dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    dialog.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -181,14 +192,7 @@ public class DashboardActivity extends AppCompatActivity {
                                     });
                                     dialog.show();
                                 }
-                                case R.id.menu_mark_as_completed: {
-                                    activity.dbHandler.updateToDoItemCompletedStatus(list.get(i).getId(), true);
-                                    break;
-                                }
-                                case R.id.menu_reset: {
-                                    activity.dbHandler.updateToDoItemCompletedStatus(list.get(i).getId(), false);
-                                    break;
-                                }
+
                             }
                             return true;
                         }

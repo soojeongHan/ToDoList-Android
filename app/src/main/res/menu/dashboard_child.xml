@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/menu_edit"
-          android:title="수정"/>
     <item android:id="@+id/menu_delete"
           android:title="삭제"/>
     <item android:id="@+id/menu_mark_as_completed"
-          android:title="마크"/>
-    <item android:id="@+id/menu_reset"
-          android:title="리셋 "/>
+          android:title="완료/취소"/>
 
 </menu>

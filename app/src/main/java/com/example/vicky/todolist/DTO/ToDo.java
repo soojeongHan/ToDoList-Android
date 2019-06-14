@@ -28,11 +28,11 @@ public class ToDo {
         this.name = name;
     }
 
-    public final boolean isTodo_isCompleted() {
+    public boolean getTodo_isCompleted() {
         return todo_isCompleted;
     }
 
-    public final void setTodo_isCompleted(boolean todo_isCompleted) {
+    public void setTodo_isCompleted(boolean todo_isCompleted) {
         this.todo_isCompleted = todo_isCompleted;
     }
 

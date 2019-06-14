@@ -52,6 +52,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COL_NAME, todo.getName());
+        cv.put(COL_TODO_IS_COMPLETED, 1);
         Log.i("cv : ", String.valueOf(cv));
         long result = db.insert(TABLE_TODO, null, cv);
         return result != -1;
@@ -204,4 +205,32 @@ public class DBHandler extends SQLiteOpenHelper {
         Log.i("cv : ", String.valueOf(cv));
         db.insert(TABLE_TODO_ITEM, null, cv);
     }
+
+    void updateToDoCompleted(long todoId, int check) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_TODO_IS_COMPLETED, check);
+        Log.i("cv ", String.valueOf(cv));
+        db.update(TABLE_TODO, cv, COL_ID + "=?", new String[]{String.valueOf(todoId)});
+    }
+
+    ArrayList<ToDo> getToDoFromCompleted(int completedTODO) {
+        ArrayList<ToDo> result = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Log.i("dbhandlercompletedTODO ", String.valueOf(completedTODO));
+        Cursor queryResult = db.rawQuery("SELECT * from " + TABLE_TODO + " WHERE " + COL_TODO_IS_COMPLETED + "=" + completedTODO, null);
+        if (queryResult.moveToFirst()) {
+            do {
+                ToDo todo = new ToDo();
+                todo.setId(queryResult.getLong(queryResult.getColumnIndex(COL_ID)));
+                todo.setName(queryResult.getString(queryResult.getColumnIndex(COL_NAME)));
+                todo.setTodo_isCompleted(queryResult.getInt(queryResult.getColumnIndex(COL_TODO_IS_COMPLETED)) == 1);
+                result.add(todo);
+            } while (queryResult.moveToNext());
+        }
+        queryResult.close();
+        Log.i("result : ", String.valueOf(result));
+        return result;
+    }
+
 }
